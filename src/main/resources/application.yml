@@ -1,0 +1,36 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ingress_academy
+    username: postgres
+    password: 2000
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: postgresql
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+      hibernate:
+        format-sql: true
+    open-in-view: false
+encryption:
+  salt:
+    rounds: 10
+jwt:
+  secret:
+    key: A893KM2WLO67XMA3LS0L1MA0S7YP3QD5D0ALP0QOI892M3CS9ZA5623DE7KM0NQ4
+#springdoc:
+#  api-docs:
+#    enabled: true
+#    path: /api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+#application-description: Omnio application
+#application-version: 1.0
