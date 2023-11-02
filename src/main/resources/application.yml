@@ -6,6 +6,10 @@ spring:
     username: postgres
     password: 2000
     driver-class-name: org.postgresql.Driver
+  liquibase:
+   change-log: classpath:liquibase/changelog.sql
+#  main:
+#    allow-bean-definition-overriding: true
   jpa:
     hibernate:
       ddl-auto: update
@@ -26,11 +30,12 @@ encryption:
 jwt:
   secret:
     key: A893KM2WLO67XMA3LS0L1MA0S7YP3QD5D0ALP0QOI892M3CS9ZA5623DE7KM0NQ4
-#springdoc:
-#  api-docs:
-#    enabled: true
-#    path: /api-docs
-#  swagger-ui:
-#    path: /swagger-ui.html
-#application-description: Omnio application
-#application-version: 1.0
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+application-description: Book store application
+
+application-version: 1.0

@@ -8,7 +8,7 @@ group = "$groupName"
 version = "$SNAPSHOTVersion"
 
 java {
-    sourceCompatibility = "$javaVersion"
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -29,6 +29,9 @@ dependencies {
     runtimeOnly "io.jsonwebtoken:jjwt-impl:$jjwtImplVersion"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructProcessorVersion"
     implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$openAPIVersion"
+    implementation "org.hibernate.validator:hibernate-validator:$validatorVersion"
+    implementation "org.liquibase:liquibase-core:$liquibaseVersion"
 
 
 }
