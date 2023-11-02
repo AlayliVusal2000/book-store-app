@@ -1,6 +1,5 @@
 package az.ingress.bookstore.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -29,7 +28,10 @@ public class SecurityConfig {
                 .cors()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/**").permitAll()
+                .requestMatchers("/author/**").permitAll()
+                .requestMatchers("/student/**").permitAll()
+                .requestMatchers("/swagger-ui/**").permitAll()
+                .requestMatchers("/api-docs/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

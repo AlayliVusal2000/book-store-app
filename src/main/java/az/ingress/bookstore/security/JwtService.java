@@ -1,6 +1,5 @@
 package az.ingress.bookstore.security;
 
-import az.ingress.bookstore.dao.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -21,18 +20,15 @@ public class JwtService {
     @Value("${jwt.secret.key}")
     public String SECRET_KEY;
 
-    public String generateToken(UserEntity userEntity) {
-        return createToken(new HashMap<>(), userEntity);
+    public String generateToken(String username) {
+        return createToken(new HashMap<>(), username);
     }
 
-    public String createToken(Map<String, Object> extraClaims, UserEntity userEntity) {
+    public String createToken(Map<String, Object> extraClaims, String username) {
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(userEntity.getUsername())
+                .setSubject(username)
                 .setHeader(Map.of("type", "JWT"))
-                .addClaims(Map.of("id", userEntity.getId()))
-                .addClaims(Map.of("name", userEntity.getName()))
-                .addClaims(Map.of("role", userEntity.getRole()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24)))
                 .signWith(getSigninKey(), SignatureAlgorithm.HS256)

@@ -14,12 +14,11 @@ public class RegisterResponse {
     String name;
     String surname;
     String username;
-    String email;
     Role role;
 
     @Override
     public String toString() {
-        return "RegisterResponse{name='%s', surname='%s', username='%s', email='%s', role=%s}"
-                .formatted(name, surname, username, email, role);
+        return "RegisterResponse{name='%s', surname='%s', username='%s', role=%s}"
+                .formatted(name, surname, username, role);
     }
 }
