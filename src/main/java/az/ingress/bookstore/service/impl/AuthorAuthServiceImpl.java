@@ -5,11 +5,11 @@ import az.ingress.bookstore.dao.entity.Author;
 import az.ingress.bookstore.dao.entity.Student;
 import az.ingress.bookstore.dao.repo.AuthorRepository;
 import az.ingress.bookstore.dao.repo.StudentRepository;
+import az.ingress.bookstore.dto.request.AuthenticationRequest;
+import az.ingress.bookstore.dto.request.RegisterRequest;
+import az.ingress.bookstore.dto.response.AuthenticationResponse;
 import az.ingress.bookstore.exception.AuthorNotFoundException;
 import az.ingress.bookstore.exception.error.ErrorMessage;
-import az.ingress.bookstore.model.request.AuthenticationRequest;
-import az.ingress.bookstore.model.request.RegisterRequest;
-import az.ingress.bookstore.model.response.AuthenticationResponse;
 import az.ingress.bookstore.security.EncryptionService;
 import az.ingress.bookstore.security.JwtService;
 import az.ingress.bookstore.service.AuthorAuthService;
@@ -80,10 +80,10 @@ public class AuthorAuthServiceImpl implements AuthorAuthService {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorMessage.USERNAME_OR_PASSWORD_INCORRECT);
         } else {
             authorRepository.findByUsername(request.getUsername()).orElseThrow(
-                    () -> new AuthorNotFoundException(HttpStatus.NOT_FOUND.name(), ErrorMessage.STUDENT_NOT_FOUND));
+                    () -> new AuthorNotFoundException(HttpStatus.NOT_FOUND.name(), ErrorMessage.AUTHOR_NOT_FOUND));
             AuthenticationResponse response = new AuthenticationResponse();
             response.setToken(jwt);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.status(CREATED).body(response);
         }
     }
 
@@ -92,7 +92,7 @@ public class AuthorAuthServiceImpl implements AuthorAuthService {
         if (optionalAuthor.isPresent()) {
             Author author = optionalAuthor.get();
             if (encryptionService.verifyPassword(request.getPassword(), author.getPassword())) {
-                return jwtService.generateToken(author.getUsername());
+                return jwtService.generateTokenTest(author.getUsername());
             } else return null;
         }
         return BAD_CREDENTIALS;

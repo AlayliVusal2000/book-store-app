@@ -1,6 +1,5 @@
-package az.ingress.bookstore.model.request;
+package az.ingress.bookstore.dto.request;
 
-import az.ingress.bookstore.consts.Role;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
