@@ -1,8 +1,10 @@
 package az.ingress.bookstore.mapper;
 
 import az.ingress.bookstore.dao.entity.Student;
-import az.ingress.bookstore.model.request.RegisterRequest;
-import az.ingress.bookstore.model.response.RegisterResponse;
+import az.ingress.bookstore.dto.request.AuthorRequest;
+import az.ingress.bookstore.dto.request.RegisterRequest;
+import az.ingress.bookstore.dto.response.AuthorResponse;
+import az.ingress.bookstore.dto.response.RegisterResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -15,5 +17,6 @@ public interface StudentMapper {
     StudentMapper STUDENT_MAPPER = Mappers.getMapper(StudentMapper.class);
     Student fromRequestToModel(RegisterRequest request);
     RegisterResponse fromModelToResponse(Student student );
+
 
 }

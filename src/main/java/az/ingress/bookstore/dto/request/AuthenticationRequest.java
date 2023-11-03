@@ -1,4 +1,4 @@
-package az.ingress.bookstore.model.request;
+package az.ingress.bookstore.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Getter;

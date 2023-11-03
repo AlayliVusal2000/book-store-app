@@ -1,7 +1,7 @@
 package az.ingress.bookstore.controller;
 
-import az.ingress.bookstore.model.request.AuthenticationRequest;
-import az.ingress.bookstore.model.request.RegisterRequest;
+import az.ingress.bookstore.dto.request.AuthenticationRequest;
+import az.ingress.bookstore.dto.request.RegisterRequest;
 import az.ingress.bookstore.service.AuthorAuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,5 +28,4 @@ public class AuthorAuthController {
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest request) {
         return authorAuthService.authorLogin(request);
     }
-
 }
