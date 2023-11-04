@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/author/signup", "/author/login",
                         "/student/signup", "/student/login",
-                        "/books/get/**", "/books/getAll",
+                        "/book/get/**", "/book/getAll",
                         "/students/getBooks/**")
                 .permitAll()
                 .and()

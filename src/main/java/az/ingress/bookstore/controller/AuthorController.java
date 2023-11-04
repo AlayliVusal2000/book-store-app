@@ -21,19 +21,23 @@ public class AuthorController {
 
     @PatchMapping("/changePassword")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
-        System.out.println(request.getNewPassword());
-        System.out.println(request.getNewPasswordAgain());
-        System.out.println(request.getOldPassword());
         authorService.changePassword(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
     @PutMapping("/update")
-    public ResponseEntity<AuthorResponse> updateMyAccount(@RequestBody AuthorRequest request){
-        return authorService.updateAccount(request);
+    public ResponseEntity<AuthorResponse> updateMyAccount(@RequestBody AuthorRequest request) {
+        return authorService.updateMyAccount(request);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteMyAccount() {
+        authorService.deleteMyAccount();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String>createBook(@RequestBody BookRequest bookRequest){
+    public ResponseEntity<String> createBook(@RequestBody BookRequest bookRequest) {
         authorService.createBook(bookRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

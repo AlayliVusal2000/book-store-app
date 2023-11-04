@@ -67,7 +67,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public ResponseEntity<AuthorResponse> updateAccount(AuthorRequest authorRequest) {
+    public ResponseEntity<AuthorResponse> updateMyAccount(AuthorRequest authorRequest) {
         Authentication contextHolder = SecurityContextHolder.getContext().getAuthentication();
         Author author = authorRepository.findByUsername(contextHolder.getName()).get();
         if (author.getRole() == Role.AUTHOR) {
@@ -83,6 +83,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findByUsername(contextHolder.getName()).get();
         if (author.getRole() == Role.AUTHOR) {
             authorRepository.delete(author);
+            log.info("Account deleted. ");
         } else ResponseEntity.status(BAD_REQUEST).build();
 
     }
@@ -92,6 +93,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findByUsername(contextHolder.getName()).get();
         if (author.getRole() == Role.AUTHOR) {
             Book book = BOOK_MAPPER.fromRequestToModel(bookRequest);
+            book.setAuthor(author);
             book.setAuthorName(author.getName());
             bookRepository.save(book);
             return ResponseEntity.status(HttpStatus.CREATED).body(BOOK_MAPPER.fromModelToResponse(book));
