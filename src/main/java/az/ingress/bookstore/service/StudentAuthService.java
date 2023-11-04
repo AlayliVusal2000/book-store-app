@@ -11,5 +11,4 @@ public interface StudentAuthService {
     ResponseEntity<?> studentSignUp(RegisterRequest registerRequest);
 
     ResponseEntity<?> studentLogin(AuthenticationRequest request);
-     void changePassword(ChangePasswordRequest request);
 }

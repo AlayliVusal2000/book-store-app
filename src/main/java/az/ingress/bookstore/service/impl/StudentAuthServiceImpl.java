@@ -5,14 +5,11 @@ import az.ingress.bookstore.dao.entity.Author;
 import az.ingress.bookstore.dao.entity.Student;
 import az.ingress.bookstore.dao.repo.AuthorRepository;
 import az.ingress.bookstore.dao.repo.StudentRepository;
-import az.ingress.bookstore.dto.request.ChangePasswordRequest;
-import az.ingress.bookstore.exception.IncorrectPasswordException;
-import az.ingress.bookstore.exception.PasswordNotMatchesException;
-import az.ingress.bookstore.exception.StudentNotFoundException;
-import az.ingress.bookstore.exception.error.ErrorMessage;
 import az.ingress.bookstore.dto.request.AuthenticationRequest;
 import az.ingress.bookstore.dto.request.RegisterRequest;
 import az.ingress.bookstore.dto.response.AuthenticationResponse;
+import az.ingress.bookstore.exception.StudentNotFoundException;
+import az.ingress.bookstore.exception.error.ErrorMessage;
 import az.ingress.bookstore.security.EncryptionService;
 import az.ingress.bookstore.security.JwtService;
 import az.ingress.bookstore.service.StudentAuthService;
@@ -20,12 +17,9 @@ import az.ingress.bookstore.util.Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import static az.ingress.bookstore.exception.error.ErrorMessage.BAD_CREDENTIALS;
@@ -79,7 +73,7 @@ public class StudentAuthServiceImpl implements StudentAuthService {
         return ResponseEntity.status(BAD_REQUEST).body(USERNAME_ALREADY_EXISTS);
     }
 
-    
+
     @Override
     public ResponseEntity<?> studentLogin(AuthenticationRequest request) {
         String jwt = checkJwt(request);
@@ -103,23 +97,6 @@ public class StudentAuthServiceImpl implements StudentAuthService {
             } else return null;
         }
         return BAD_CREDENTIALS;
-    }
-
-    @Override
-    public void changePassword(ChangePasswordRequest request) {
-
-        Authentication contextHolder = SecurityContextHolder.getContext().getAuthentication();
-        Student student = studentRepository.findByUsername(contextHolder.getName()).get();
-        if (!encryptionService.verifyPassword(request.getOldPassword(), student.getPassword())) {
-            throw new IncorrectPasswordException(BAD_REQUEST.name(), ErrorMessage.INCORRECT_PASSWORD);
-        } else if (!Objects.equals(request.getNewPassword(), (request.getNewPasswordAgain()))) {
-            throw new PasswordNotMatchesException(BAD_REQUEST.name(), ErrorMessage.PASSWORD_NOT_MATCHES);
-        } else {
-            String encodedPassword = passwordEncoder.encode(request.getNewPassword());
-            student.setPassword(encodedPassword);
-            studentRepository.save(student);
-            log.info("Author password has been changed. ");
-        }
     }
 
 }

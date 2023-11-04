@@ -8,18 +8,14 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
+@Table
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "books")
-public class Book {
+public class Subscriber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     Long id;
-    @Column(name = "name")
-    String name;
-    @Column(name = "author_name")
-    String authorName;
+
     @ManyToOne
     @JoinColumn(name = "student_id")
     Student student;

@@ -17,5 +17,5 @@ public interface AuthorService {
 
     ResponseEntity<BookResponse> createBook(BookRequest request);
 
-    ResponseEntity<AuthorResponse> updateAccount(AuthorRequest request);
+    ResponseEntity<AuthorResponse> updateMyAccount(AuthorRequest request);
 }

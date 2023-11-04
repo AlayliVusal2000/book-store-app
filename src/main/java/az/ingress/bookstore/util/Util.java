@@ -6,5 +6,4 @@ public class Util {
     public static boolean validationSignUp(RegisterRequest request) {
         return request.getName() != null && request.getUsername() != null && request.getPassword() != null;
     }
-
 }

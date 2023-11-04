@@ -8,8 +8,6 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
    change-log: classpath:liquibase/changelog.sql
-  main:
-    allow-bean-definition-overriding: true
   jpa:
     hibernate:
       ddl-auto: update
