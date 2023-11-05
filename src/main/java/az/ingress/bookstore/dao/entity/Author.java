@@ -38,7 +38,11 @@ public class Author {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Subscriber> subscribers;
 
-
+    @Override
+    public String toString() {
+        return "Author{id=%d, name='%s', surname='%s', age=%d, username='%s', password='%s', role=%s}"
+                .formatted(id, name, surname, age, username, password, role);
+    }
 }
 
 

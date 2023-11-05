@@ -4,10 +4,13 @@ import az.ingress.bookstore.dto.request.AuthorRequest;
 import az.ingress.bookstore.dto.request.BookRequest;
 import az.ingress.bookstore.dto.request.ChangePasswordRequest;
 import az.ingress.bookstore.dto.response.AuthorResponse;
+import az.ingress.bookstore.dto.response.BookResponse;
 import az.ingress.bookstore.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/author")
@@ -40,5 +43,19 @@ public class AuthorController {
     public ResponseEntity<String> createBook(@RequestBody BookRequest bookRequest) {
         authorService.createBook(bookRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/getAll")
+    public List<Object[]> getAllSubscribers() {
+        return authorService.getAllSubscribers();
+    }
+
+    @DeleteMapping("/deleteBook/{bookName}")
+    public void deleteBook(@PathVariable String bookName) {
+        authorService.deleteBook(bookName);
+    }
+    @GetMapping("/getAllBooks")
+    public List<BookResponse>getAllBooks(){
+        return authorService.getAllBooks();
     }
 }

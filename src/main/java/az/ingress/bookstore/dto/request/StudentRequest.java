@@ -10,4 +10,10 @@ public class StudentRequest {
     String surname;
     Integer age;
     String username;
+
+    @Override
+    public String toString() {
+        return "StudentRequest{name='%s', surname='%s', age=%d, username='%s'}"
+                .formatted(name, surname, age, username);
+    }
 }

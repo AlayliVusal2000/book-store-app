@@ -1,8 +1,7 @@
 package az.ingress.bookstore.config;
 
 
-import az.ingress.bookstore.consts.Role;
-import az.ingress.bookstore.security.JwtRequestFilter;
+import az.ingress.bookstore.security.jwt.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,9 +48,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/author/signup", "/author/login",
-                        "/student/signup", "/student/login",
-                        "/book/get/**", "/book/getAll",
-                        "/students/getBooks/**")
+                        "/student/signup", "/student/login")
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()

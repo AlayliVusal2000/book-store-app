@@ -13,4 +13,10 @@ public class AuthorRequest {
     String surname;
     Integer age;
     String username;
+
+    @Override
+    public String toString() {
+        return "AuthorRequest{name='%s', surname='%s', age=%d, username='%s'}"
+                .formatted(name, surname, age, username);
+    }
 }

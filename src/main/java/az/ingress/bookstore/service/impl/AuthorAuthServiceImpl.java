@@ -11,7 +11,7 @@ import az.ingress.bookstore.dto.response.AuthenticationResponse;
 import az.ingress.bookstore.exception.AuthorNotFoundException;
 import az.ingress.bookstore.exception.error.ErrorMessage;
 import az.ingress.bookstore.security.EncryptionService;
-import az.ingress.bookstore.security.JwtService;
+import az.ingress.bookstore.security.jwt.JwtService;
 import az.ingress.bookstore.service.AuthorAuthService;
 import az.ingress.bookstore.util.Util;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +61,7 @@ public class AuthorAuthServiceImpl implements AuthorAuthService {
                     author.setRole(Role.AUTHOR);
                     authorRepository.save(author);
                     return ResponseEntity.status(CREATED)
-                            .body(AUTHOR_MAPPER.fromModelToResponse(author));
+                            .body(AUTHOR_MAPPER.fromModelToRegisterResponse(author));
                 } else {
                     log.error("registerRequest {}", registerRequest);
                     return ResponseEntity.status(BAD_REQUEST).body(USERNAME_ALREADY_EXISTS);
