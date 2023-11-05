@@ -8,7 +8,8 @@ public class ErrorMessage {
     public static final String AUTHOR_NOT_FOUND = "Author not found. ";
     public static final String INCORRECT_PASSWORD = "The password you entered is incorrect! ";
     public static final String PASSWORD_NOT_MATCHES = "The passwords you entered do not match! ";
-    public static final String NOT_SAME_PASSWORDS="The old and new password cannot be the same! ";
+    public static final String BOOK_NOT_FOUND = "Book not found. ";
+    public static final String USER_NAME_NOT_FOUND = "Username not found. ";
 
 
 }

@@ -1,5 +1,6 @@
-package az.ingress.bookstore.security;
+package az.ingress.bookstore.security.jwt;
 
+import az.ingress.bookstore.security.UserDetailServiceImpl;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

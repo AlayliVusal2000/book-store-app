@@ -13,6 +13,7 @@ public class RegisterResponse {
 
     String name;
     String surname;
+    Integer age;
     String username;
     Role role;
 

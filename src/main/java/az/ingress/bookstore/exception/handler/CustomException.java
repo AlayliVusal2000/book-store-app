@@ -1,9 +1,6 @@
 package az.ingress.bookstore.exception.handler;
 
-import az.ingress.bookstore.exception.AuthorNotFoundException;
-import az.ingress.bookstore.exception.IncorrectPasswordException;
-import az.ingress.bookstore.exception.PasswordNotMatchesException;
-import az.ingress.bookstore.exception.StudentNotFoundException;
+import az.ingress.bookstore.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -38,5 +35,17 @@ public class CustomException {
     public ProblemDetail handlerPasswordNotMatchesException(PasswordNotMatchesException exception) {
         log.error("handlerPasswordNotMatchesException {}", exception.getMessage());
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
+    }
+    @ExceptionHandler(BookNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ProblemDetail handlerBookNotFoundException(BookNotFoundException exception) {
+        log.error("handlerBookNotFoundException {}", exception.getMessage());
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
+    }
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ProblemDetail handlerUsernameNotFoundException(UsernameNotFoundException exception) {
+        log.error("handlerUsernameNotFoundException {}", exception.getMessage());
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
     }
 }

@@ -8,6 +8,9 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+@NamedQuery(name = "Book.findBooksByStatus", query = "SELECT  b.name ,b.authorName " +
+        "FROM Book b " +
+        "JOIN b.student a where a.id=:studentId")
 
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package az.ingress.bookstore.security;
+package az.ingress.bookstore.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

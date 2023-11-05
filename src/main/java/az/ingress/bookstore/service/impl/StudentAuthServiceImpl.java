@@ -11,7 +11,7 @@ import az.ingress.bookstore.dto.response.AuthenticationResponse;
 import az.ingress.bookstore.exception.StudentNotFoundException;
 import az.ingress.bookstore.exception.error.ErrorMessage;
 import az.ingress.bookstore.security.EncryptionService;
-import az.ingress.bookstore.security.JwtService;
+import az.ingress.bookstore.security.jwt.JwtService;
 import az.ingress.bookstore.service.StudentAuthService;
 import az.ingress.bookstore.util.Util;
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +61,7 @@ public class StudentAuthServiceImpl implements StudentAuthService {
                     student.setRole(Role.STUDENT);
                     studentRepository.save(student);
                     return ResponseEntity.status(CREATED)
-                            .body(STUDENT_MAPPER.fromModelToResponse(student));
+                            .body(STUDENT_MAPPER.fromModelToRegisterResponse(student));
                 } else {
                     log.error("registerRequest {}", registerRequest);
                     return ResponseEntity.status(BAD_REQUEST).body(ErrorMessage.USERNAME_ALREADY_EXISTS);
