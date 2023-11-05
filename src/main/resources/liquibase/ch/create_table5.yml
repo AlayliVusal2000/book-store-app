@@ -1,0 +1,33 @@
+#databaseChangeLog:
+#  - changeSet:
+#      id: 1
+#      author: your_name
+#      changes:
+#        - createTable:
+#            tableName: students
+#            columns:
+#              - column:
+#                  name: id
+#                  type: bigint
+#                  autoIncrement: true
+#                  constraints:
+#                    primaryKey: true
+#                    nullable: false
+#              - column:
+#                  name: name
+#                  type: varchar(255)
+#              - column:
+#                  name: surname
+#                  type: varchar(255)
+#              - column:
+#                  name: age
+#                  type: int
+#              - column:
+#                  name: username
+#                  type: varchar(255)
+#              - column:
+#                  name: password
+#                  type: varchar(255)
+#              - column:
+#                  name: role
+#                  type: varchar(255)

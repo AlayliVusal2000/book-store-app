@@ -1,0 +1,5 @@
+#databaseChangeLog:
+#  - include:
+#      file: classpath:liquibase/ch/create_table5.yml
+#  - include:
+#      file: classpath:liquibase/ch/create_table4.yml

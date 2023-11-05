@@ -48,7 +48,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/author/signup", "/author/login",
-                        "/student/signup", "/student/login")
+                        "/student/signup", "/student/login",
+                        "/api-docs/**","/swagger-ui/**")
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()

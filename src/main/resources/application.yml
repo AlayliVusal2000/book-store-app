@@ -1,13 +1,15 @@
 server:
   port: 8080
+  servlet:
+    context-path: /bookStore
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/ingress_academy
     username: postgres
     password: 2000
     driver-class-name: org.postgresql.Driver
-  liquibase:
-   change-log: classpath:liquibase/changelog.sql
+#  liquibase:
+#   change-log: classpath:liquibase/changelog-master.yml
   jpa:
     hibernate:
       ddl-auto: update
