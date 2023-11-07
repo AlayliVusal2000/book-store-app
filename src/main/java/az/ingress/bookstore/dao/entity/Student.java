@@ -8,7 +8,11 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
-@NamedQuery(name = "Book.findBooksByStatus", query = "SELECT  b.name ,b.authorName " +
+
+@NamedQuery(name = "Student.getAllStudents",
+        query = "select new az.ingress.bookstore.wrapper.StudentWrapper(s.name,s.surname,s.age,s.username) from Student s")
+
+@NamedQuery(name = "Book.findBooksByStatus", query = "SELECT  b.name ,b.authorName,b.status " +
         "FROM Book b " +
         "JOIN b.student a where a.id=:studentId")
 
@@ -39,8 +43,8 @@ public class Student {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Book> books;
 
-    @OneToMany(mappedBy = "student",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    List<Subscriber>subscribers;
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Subscriber> subscribers;
 
 }
 

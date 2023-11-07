@@ -12,4 +12,5 @@ public class AuthorWrapper {
     String name;
     String surname;
     Integer age;
+    String username;
 }
