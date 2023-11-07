@@ -31,6 +31,8 @@ dependencies {
     implementation "org.mapstruct:mapstruct:$mapstructVersion"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:$openAPIVersion"
     implementation "org.hibernate.validator:hibernate-validator:$validatorVersion"
+    implementation "org.springframework.boot:spring-boot-starter-mail:$MailSenderVersion"
+
 //    implementation "org.liquibase:liquibase-core:$liquibaseVersion"
 
 

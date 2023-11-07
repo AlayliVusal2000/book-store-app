@@ -77,7 +77,7 @@ public class StudentServiceImpl implements StudentService {
                 studentRepository.save(student);
                 log.info("Student password has been changed. ");
             }
-        } else ResponseEntity.status(FORBIDDEN).build();
+        } else ResponseEntity.status(UNAUTHORIZED).build();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class StudentServiceImpl implements StudentService {
             StudentResponse response = STUDENT_MAPPER.fromModelToResponse(studentRepository.save(student));
             return ResponseEntity.status(HttpStatus.OK)
                     .body(response);
-        } else return ResponseEntity.status(FORBIDDEN).build();
+        } else return ResponseEntity.status(UNAUTHORIZED).build();
     }
 
     @Override
@@ -101,7 +101,7 @@ public class StudentServiceImpl implements StudentService {
         if (student.getRole() == Role.STUDENT) {
             studentRepository.delete(student);
             log.info("Account deleted. ");
-        } else ResponseEntity.status(FORBIDDEN).build();
+        } else ResponseEntity.status(UNAUTHORIZED).build();
     }
 
     @Override
@@ -134,7 +134,7 @@ public class StudentServiceImpl implements StudentService {
             bookRepository.save(book);
             return ResponseEntity.status(OK).body(BOOK_MAPPER.fromModelToResponse(book));
         }
-        return ResponseEntity.status(BAD_REQUEST).build();
+        return ResponseEntity.status(UNAUTHORIZED).build();
     }
 
     @Override
@@ -157,7 +157,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findByUsername(contextHolder.getName()).get();
         if (student.getRole() == Role.STUDENT) {
             return subscriberRepository.findStudentAndAuthorDetail(student.getId());
-        } else ResponseEntity.status(FORBIDDEN).build();
+        } else ResponseEntity.status(UNAUTHORIZED).build();
 
         return null;
     }
@@ -169,7 +169,7 @@ public class StudentServiceImpl implements StudentService {
         if (student.getRole() == Role.STUDENT) {
             return bookRepository.findBooksByStatus(student.getId());
 
-        } else ResponseEntity.status(FORBIDDEN).build();
+        } else ResponseEntity.status(UNAUTHORIZED).build();
 
         return null;
     }

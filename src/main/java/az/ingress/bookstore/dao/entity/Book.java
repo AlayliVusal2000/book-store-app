@@ -11,6 +11,10 @@ import lombok.experimental.FieldDefaults;
 @NamedQuery(name = "Book.getAllBooks",
         query = "select new az.ingress.bookstore.wrapper.BookWrapper " +
                 "(b.name,b.authorName,b.status) from Book b where b.status='HAVE'")
+@NamedQuery(name = "Book.getAllBooks",
+        query = "select new az.ingress.bookstore.wrapper.BookWrapper " +
+                "(b.name,b.authorName,b.status) from Book b")
+
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)

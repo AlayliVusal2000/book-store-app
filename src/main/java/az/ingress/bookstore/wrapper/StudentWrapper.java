@@ -13,4 +13,5 @@ public class StudentWrapper {
     String name;
     String surname;
     Integer age;
+    String username;
 }

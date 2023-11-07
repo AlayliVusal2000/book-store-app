@@ -1,11 +1,13 @@
 package az.ingress.bookstore.service.impl;
 
+import az.ingress.bookstore.consts.EmailMessage;
 import az.ingress.bookstore.consts.Role;
 import az.ingress.bookstore.consts.Status;
 import az.ingress.bookstore.dao.entity.Author;
 import az.ingress.bookstore.dao.entity.Book;
 import az.ingress.bookstore.dao.repo.AuthorRepository;
 import az.ingress.bookstore.dao.repo.BookRepository;
+import az.ingress.bookstore.dao.repo.StudentRepository;
 import az.ingress.bookstore.dao.repo.SubscriberRepository;
 import az.ingress.bookstore.dto.request.AuthorRequest;
 import az.ingress.bookstore.dto.request.BookRequest;
@@ -19,11 +21,14 @@ import az.ingress.bookstore.exception.PasswordNotMatchesException;
 import az.ingress.bookstore.exception.error.ErrorMessage;
 import az.ingress.bookstore.security.EncryptionService;
 import az.ingress.bookstore.service.AuthorService;
+import az.ingress.bookstore.service.EmailService;
+import az.ingress.bookstore.wrapper.StudentWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +38,7 @@ import java.util.Objects;
 import static az.ingress.bookstore.mapper.AuthorMapper.AUTHOR_MAPPER;
 import static az.ingress.bookstore.mapper.BookMapper.BOOK_MAPPER;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @Slf4j
 @Service
@@ -43,17 +48,23 @@ public class AuthorServiceImpl implements AuthorService {
     private final EncryptionService encryptionService;
     private final BookRepository bookRepository;
     private final SubscriberRepository subscriberRepository;
+    private final EmailService emailService;
+    private final StudentRepository studentRepository;
 
     public AuthorServiceImpl(AuthorRepository authorRepository,
                              PasswordEncoder passwordEncoder,
                              EncryptionService encryptionService,
                              BookRepository bookRepository,
-                             SubscriberRepository subscriberRepository) {
+                             SubscriberRepository subscriberRepository,
+                             EmailService emailService,
+                             StudentRepository studentRepository) {
         this.authorRepository = authorRepository;
         this.passwordEncoder = passwordEncoder;
         this.encryptionService = encryptionService;
         this.bookRepository = bookRepository;
         this.subscriberRepository = subscriberRepository;
+        this.emailService=emailService;
+        this.studentRepository=studentRepository;
     }
 
 
@@ -87,9 +98,9 @@ public class AuthorServiceImpl implements AuthorService {
             author.setAge(authorRequest.getAge());
             author.setName(authorRequest.getName());
             author.setSurname(authorRequest.getSurname());
+            authorRepository.save(author);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(AUTHOR_MAPPER.fromModelToResponse
-                            (author));
+                    .body(AUTHOR_MAPPER.fromModelToResponse(author));
         } else return ResponseEntity.status(BAD_REQUEST).build();
     }
 
@@ -109,13 +120,15 @@ public class AuthorServiceImpl implements AuthorService {
         Authentication contextHolder = SecurityContextHolder.getContext().getAuthentication();
         Author author = authorRepository.findByUsername(contextHolder.getName()).get();
         if (author.getRole() == Role.AUTHOR) {
+            List<StudentWrapper> students=studentRepository.getAllStudents();
             Book book = BOOK_MAPPER.fromRequestToModel(bookRequest);
             book.setAuthor(author);
             book.setStatus(Status.HAVE);
             book.setAuthorName(author.getName());
+            emailService.sendEmailToStudents(students, EmailMessage.SUBJECT,EmailMessage.MESSAGE+book.getName()+','+book.getAuthorName());
             bookRepository.save(book);
             return ResponseEntity.status(HttpStatus.CREATED).body(BOOK_MAPPER.fromModelToResponse(book));
-        } else return ResponseEntity.status(BAD_REQUEST).build();
+        } else return ResponseEntity.status(UNAUTHORIZED).build();
     }
 
     @Override
@@ -127,7 +140,7 @@ public class AuthorServiceImpl implements AuthorService {
                     () -> new BookNotFoundException(HttpStatus.NOT_FOUND.name(), ErrorMessage.BOOK_NOT_FOUND));
             bookRepository.delete(book);
             log.info("A book named " + bookName + "has been deleted");
-        } else ResponseEntity.status(FORBIDDEN).build();
+        } else ResponseEntity.status(UNAUTHORIZED).build();
     }
 
     @Override
@@ -136,7 +149,7 @@ public class AuthorServiceImpl implements AuthorService {
         Author author = authorRepository.findByUsername(contextHolder.getName()).get();
         if (author.getRole() == Role.AUTHOR) {
             return subscriberRepository.findStudentAndAuthorDetails(author.getId());
-        } else ResponseEntity.status(FORBIDDEN).build();
+        } else ResponseEntity.status(UNAUTHORIZED).build();
         return null;
     }
 
@@ -145,10 +158,9 @@ public class AuthorServiceImpl implements AuthorService {
         Authentication contextHolder = SecurityContextHolder.getContext().getAuthentication();
         Author author = authorRepository.findByUsername(contextHolder.getName()).get();
         if (author.getRole() != Role.AUTHOR) {
-            ResponseEntity.status(FORBIDDEN).build();
+            ResponseEntity.status(UNAUTHORIZED).build();
         }
-            List<Book> books = bookRepository.findAll();
-            return BOOK_MAPPER.fromListModelToListResponse(books);
-
+        List<Book> books = bookRepository.findAll();
+        return BOOK_MAPPER.fromListModelToListResponse(books);
     }
 }
