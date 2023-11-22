@@ -176,7 +176,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<BookWrapper> getAllBooks() {
-        return bookRepository.getAllBooks();
+        return bookRepository.getAllBooksStatus();
     }
 
 }

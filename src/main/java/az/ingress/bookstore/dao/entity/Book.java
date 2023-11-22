@@ -8,7 +8,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 
-@NamedQuery(name = "Book.getAllBooks",
+@NamedQuery(name = "Book.getAllBooksStatus",
         query = "select new az.ingress.bookstore.wrapper.BookWrapper " +
                 "(b.name,b.authorName,b.status) from Book b where b.status='HAVE'")
 @NamedQuery(name = "Book.getAllBooks",

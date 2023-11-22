@@ -15,4 +15,5 @@ public interface BookRepository extends JpaRepository<Book,Long> {
     List<Object[]> findBooksByStatus(@Param("studentId") Long studentId);
 
     List<BookWrapper> getAllBooks();
+    List<BookWrapper> getAllBooksStatus();
 }
