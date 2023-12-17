@@ -20,10 +20,6 @@ public class EncryptionService {
         salt = BCrypt.gensalt(saltRounds);
     }
 
-    public String encryptPassword(String password) {
-        return BCrypt.hashpw(password, salt);
-    }
-
     public boolean verifyPassword(String password, String hash) {
         return BCrypt.checkpw(password, hash);
     }

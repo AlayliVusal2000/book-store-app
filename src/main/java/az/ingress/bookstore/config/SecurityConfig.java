@@ -44,22 +44,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.cors().and()
-                .csrf().disable()
-                .authorizeHttpRequests()
+        return http.cors()
+                .and().csrf().disable().authorizeHttpRequests()
                 .requestMatchers("/author/signup", "/author/login",
                         "/student/signup", "/student/login",
-                        "/api-docs/**","/swagger-ui/**")
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
+                        "/api-docs/**","/swagger-ui/**").permitAll()
+                .and().authorizeHttpRequests().anyRequest().authenticated()
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
